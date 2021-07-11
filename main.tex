@@ -104,27 +104,27 @@ np.histogram(
 \begin{minted}{python}
 import awkward as ak, numpy as np, numba as nb
 
-millionsongs = ak.from_parquet("s3://pivarski-princeton/millionsongs/", lazy=True)
-
-@nb.jit
+@nb.jit                                        # Numba will JIT-compile this function
 def collect_pitch_intervals(millionsongs):
-    pitch_intervals = np.zeros(23, np.int64)     # histogram as an array to fill
+    pitch_intervals = np.zeros(23, np.int64)   # histogram as an array to fill
 
-    for song in millionsongs:                    # iteration over variable-length songs
+    for song in millionsongs:                  # iteration over variable-length songs
         previous = None
-
-        for segment in song.analysis.segments:   # iteration over segments
+        for segment in song.analysis.segments:
+                                               # cast as NumPy to use NumPy functions
             loudest_pitch = np.argmax(np.asarray(segment.pitches))
 
             if previous is not None:
                 interval = loudest_pitch - previous
-                if interval != 0:
+                if interval != 0:              # manually histogram non-zero changes
                     pitch_intervals[interval + 11] += 1
-            previous = loudest_pitch
+
+            previous = loudest_pitch           # remember previous for differences
 
     return pitch_intervals
 
-collect_pitch_intervals(millionsongs)   # compiled by Numba, including lazy array
+millionsongs = ak.from_parquet("s3://pivarski-princeton/millionsongs/", lazy=True)
+collect_pitch_intervals(millionsongs)          # run JIT-compiled function
 \end{minted}
 \end{frame}
 
@@ -133,6 +133,7 @@ collect_pitch_intervals(millionsongs)   # compiled by Numba, including lazy arra
 \vspace{0.35 cm}
 \textcolor{darkorange}{\bf Variable-length, nested data is a common problem,} so Awkward Array is a general-purpose library: working with nested lists, records, and missing data.
 
+\begin{uncoverenv}<2->
 \vspace{0.35 cm}
 But scientists in different fields have revealed gaps in scope:
 
@@ -140,33 +141,39 @@ But scientists in different fields have revealed gaps in scope:
 \item Radio astronomers asked for complex numbers: \mbox{\normalsize \href{https://github.com/scikit-hep/awkward-1.0/issues/392}{\textcolor{blue}{\#392}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/421}{\textcolor{blue}{\#421}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/652}{\textcolor{blue}{\#652}}, \href{https://github.com/scikit-hep/awkward-1.0/issues/857}{\textcolor{blue}{\#857}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/858}{\textcolor{blue}{\#858}}\hspace{-0.5 cm}}
 \item Data scientists asked for date-times: {\normalsize \href{https://github.com/scikit-hep/awkward-1.0/issues/913}{\textcolor{blue}{\#913}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/911}{\textcolor{blue}{\#911}}, \href{https://github.com/scikit-hep/awkward-1.0/issues/909}{\textcolor{blue}{\#909}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/835}{\textcolor{blue}{\#835}}, \href{https://github.com/scikit-hep/awkward-1.0/issues/367}{\textcolor{blue}{\#367}}}
 \end{itemize}
+\end{uncoverenv}
 
+\begin{uncoverenv}<3->
 \vspace{0.35 cm}
-Starting a 3-year project {\normalsize (\href{https://www.nsf.gov/awardsearch/showAward?AWD_ID=2103945&HistoricalAwards=false}{\textcolor{blue}{NSF OAC-2103945}})} to ensure that Awkward Array works for use-cases across the sciences. {\normalsize (Note: \href{https://puwebp.princeton.edu/AcadHire/apply/application.xhtml?listingId=21021}{\textcolor{blue}{postdoc opportunity}}.)}
+Starting a 3-year project {\normalsize (\href{https://www.nsf.gov/awardsearch/showAward?AWD_ID=2103945&HistoricalAwards=false}{\textcolor{blue}{NSF OAC-2103945}})} to ensure that Awkward Array works for use-cases across the sciences.
+\end{uncoverenv}
 
+\begin{uncoverenv}<4->
 \vspace{0.35 cm}
 \setlength{\fboxsep}{0.3 cm}
 \fbox{\begin{minipage}{0.95\linewidth}We're actively seeking collaborations with scientists and data scientists with ``awkward'' data problems, to ensure that Awkward Array addresses them.\end{minipage}}
+\end{uncoverenv}
 
+\begin{uncoverenv}<5->
 \normalsize
 \vspace{0.35 cm}
 Especially if this will lead to better integration with other scientific Python libraries and GPUs. (Dask integration and full GPU support are major parts of this project.)
+\end{uncoverenv}
 \end{frame}
 
-\begin{frame}{What's been happening recently?}
-Since \href{https://youtu.be/WlnUF3LRBj4}{last year's introductory presentation}, Awkward Array
-\begin{itemize}
-\item released version 1.0 (Dec 5, 2020) and adopted bimonthly releases (now 1.4)
-\item merged 346 PRs from 18 contributors: 4 undergrads, 2 engineers, 12 ``external''
-\item $\sim$30,000 pip downloads/month (mostly physicists)
-\end{itemize}
-\begin{itemize}
-\item Sorting (all \mintinline{python}{axis} depths), lexicographic for strings
-\item Parquet input/output, including lazy reading
-\item Refactoring some C++ infrastructure to Python for better Python integration
-\end{itemize}
-
+\begin{frame}{Documentation and contacts}
+\vspace{0.4 cm}
+\Large
+\begin{columns}
+\column{1.05\linewidth}
+\begin{description}\setlength{\itemsep}{0.4 cm}
+\item[\textcolor{darkorange}{\bf Install:}] \mintinline{bash}{pip install awkward} or \mintinline{bash}{conda install -c conda-forge awkward}
+\item[\textcolor{darkorange}{\bf Docs:}] \textcolor{blue}{\url{https://awkward-array.org}}
+\item[\textcolor{darkorange}{\bf GitHub:}] \textcolor{blue}{\url{https://github.com/scikit-hep/awkward-1.0}}
+\item[\textcolor{darkorange}{\bf Contact:}] \textcolor{blue}{\tt pivarski@princeton.edu}
+\item[\textcolor{darkorange}{\bf Postdoc opportunity:}] {\small \textcolor{blue}{\url{https://puwebp.princeton.edu/AcadHire/apply/application.xhtml?listingId=21021}}}
+\end{description}
+\end{columns}
 \end{frame}
-
 
 \end{document}
