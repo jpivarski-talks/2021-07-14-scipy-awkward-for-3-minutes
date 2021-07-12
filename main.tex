@@ -61,7 +61,7 @@
 \vspace{0.15 cm}
 \begin{columns}
 \column{1.1\linewidth}
-\includegraphics[width=\linewidth]{pivarski-one-slide-summary.pdf}
+\only<1>{\includegraphics[width=\linewidth]{pivarski-one-slide-summary-1.pdf}}\only<2>{\includegraphics[width=\linewidth]{pivarski-one-slide-summary-2.pdf}}\only<3>{\includegraphics[width=\linewidth]{pivarski-one-slide-summary-3.pdf}}\only<4>{\includegraphics[width=\linewidth]{pivarski-one-slide-summary-4.pdf}}\only<5>{\includegraphics[width=\linewidth]{pivarski-one-slide-summary-5.pdf}}
 \end{columns}
 \end{frame}
 
@@ -94,11 +94,11 @@ np.histogram(
 )
 \end{minted}
 
-\vspace{-2.85 cm}
-\hfill \includegraphics[width=0.4\linewidth]{million-song-histogram.pdf}
+\vspace{-2.95 cm}
+\hfill \includegraphics[width=0.38\linewidth]{million-song-histogram.pdf}
 \end{frame}
 
-\begin{frame}[fragile]{Extended example: same thing in Numba}
+\begin{frame}[fragile]{Extended example: same thing in Numba (single pass)}
 \vspace{0.2 cm}
 \scriptsize
 \begin{minted}{python}
@@ -130,48 +130,50 @@ collect_pitch_intervals(millionsongs)          # run JIT-compiled function
 
 \begin{frame}{Actively extending beyond its original domain (particle physics)}
 \large
-\vspace{0.35 cm}
-\textcolor{darkorange}{\bf Variable-length, nested data is a common problem,} so Awkward Array is a general-purpose library: working with nested lists, records, and missing data.
+\vspace{0.3 cm}
+\textcolor{darkorange}{\bf Variable-length, nested data is a common problem,} so Awkward Array is a general-purpose library for working with nested lists, records, and missing data.
 
 \begin{uncoverenv}<2->
-\vspace{0.35 cm}
-But scientists in different fields have revealed gaps in scope:
+\vspace{0.3 cm}
+But scientists in other fields have revealed gaps in scope:
 
 \begin{itemize}
 \item Radio astronomers asked for complex numbers: \mbox{\normalsize \href{https://github.com/scikit-hep/awkward-1.0/issues/392}{\textcolor{blue}{\#392}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/421}{\textcolor{blue}{\#421}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/652}{\textcolor{blue}{\#652}}, \href{https://github.com/scikit-hep/awkward-1.0/issues/857}{\textcolor{blue}{\#857}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/858}{\textcolor{blue}{\#858}}\hspace{-0.5 cm}}
 \item Data scientists asked for date-times: {\normalsize \href{https://github.com/scikit-hep/awkward-1.0/issues/913}{\textcolor{blue}{\#913}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/911}{\textcolor{blue}{\#911}}, \href{https://github.com/scikit-hep/awkward-1.0/issues/909}{\textcolor{blue}{\#909}}, \href{https://github.com/scikit-hep/awkward-1.0/pull/835}{\textcolor{blue}{\#835}}, \href{https://github.com/scikit-hep/awkward-1.0/issues/367}{\textcolor{blue}{\#367}}}
+\item \ldots
 \end{itemize}
 \end{uncoverenv}
 
 \begin{uncoverenv}<3->
-\vspace{0.35 cm}
+\vspace{0.3 cm}
 Starting a 3-year project {\normalsize (\href{https://www.nsf.gov/awardsearch/showAward?AWD_ID=2103945&HistoricalAwards=false}{\textcolor{blue}{NSF OAC-2103945}})} to ensure that Awkward Array works for use-cases across the sciences.
 \end{uncoverenv}
 
 \begin{uncoverenv}<4->
-\vspace{0.35 cm}
+\vspace{0.3 cm}
 \setlength{\fboxsep}{0.3 cm}
-\fbox{\begin{minipage}{0.95\linewidth}We're actively seeking collaborations with scientists and data scientists with ``awkward'' data problems, to ensure that Awkward Array addresses them.\end{minipage}}
+\fbox{\begin{minipage}{0.95\linewidth}We're actively seeking to collaborate with scientists who have ``awkward'' data problems, to ensure that Awkward Array addresses them.\end{minipage}}
 \end{uncoverenv}
 
 \begin{uncoverenv}<5->
 \normalsize
-\vspace{0.35 cm}
-Especially if this will lead to better integration with other scientific Python libraries and GPUs. (Dask integration and full GPU support are major parts of this project.)
+\vspace{0.1 cm}
+\ldots\ especially if it would lead to better integration with other scientific Python libraries and GPUs. (\textcolor{darkorange}{\bf Dask integration} and full \textcolor{darkorange}{\bf GPU support} are major parts of this project.)
 \end{uncoverenv}
 \end{frame}
 
 \begin{frame}{Documentation and contacts}
-\vspace{0.4 cm}
+\vspace{0.25 cm}
 \Large
 \begin{columns}
-\column{1.05\linewidth}
+\column{1.08\linewidth}
 \begin{description}\setlength{\itemsep}{0.4 cm}
-\item[\textcolor{darkorange}{\bf Install:}] \mintinline{bash}{pip install awkward} or \mintinline{bash}{conda install -c conda-forge awkward}
+\item[\textcolor{darkorange}{\bf Install:}] \textcolor{gray}{\tt\textbf{pip install awkward}} \mbox{\hspace{0.25 cm}or\hspace{0.25 cm}} \\ \textcolor{gray}{\tt\textbf{conda install -c conda-forge awkward}}
 \item[\textcolor{darkorange}{\bf Docs:}] \textcolor{blue}{\url{https://awkward-array.org}}
 \item[\textcolor{darkorange}{\bf GitHub:}] \textcolor{blue}{\url{https://github.com/scikit-hep/awkward-1.0}}
-\item[\textcolor{darkorange}{\bf Contact:}] \textcolor{blue}{\tt pivarski@princeton.edu}
-\item[\textcolor{darkorange}{\bf Postdoc opportunity:}] {\small \textcolor{blue}{\url{https://puwebp.princeton.edu/AcadHire/apply/application.xhtml?listingId=21021}}}
+\item[\textcolor{darkorange}{\bf Gitter:}] \textcolor{blue}{\url{https://gitter.im/Scikit-HEP/awkward-array}}
+\item[\textcolor{darkorange}{\bf Contact:}] \textcolor{gray}{\tt\textbf{pivarski@princeton.edu}}
+\item[\textcolor{darkorange}{\bf Postdoc opportunity:}] \small \textcolor{blue}{\url{https://puwebp.princeton.edu/AcadHire/apply/application.xhtml?listingId=21021}}
 \end{description}
 \end{columns}
 \end{frame}
